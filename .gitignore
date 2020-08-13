@@ -1,0 +1,7 @@
+node_modules
+package-lock.json
+lib
+var
+# Istambul
+.nyc_output
+coverage

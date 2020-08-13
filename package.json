@@ -1,0 +1,39 @@
+{
+    "name": "@azleads/bancointer",
+    "version": "1.0.0",
+    "description": "API de integração com o banco inter",
+    "main": "index.js",
+    "scripts": {
+        "start": "babel-node src/index.ts --extensions \".ts\"",
+        "compile-watch": "nodemon --exec npm run compile",
+        "compile": "babel --presets env -d lib/ src/",
+        "test": "nyc --reporter=text-summary npm run test:mocha || npm run test:mocha",
+        "test:mocha": "mocha --require babel-core/register --require babel-polyfill \"src/**/*.spec.js\"",
+        "test-it": "mocha --require babel-core/register --require babel-polyfill \"test-it/**/*.test-it.js\"",
+        "postinstall": "npm run compile"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/cli": "^7.10.5",
+        "@babel/core": "^7.11.1",
+        "@babel/node": "^7.10.5",
+        "@babel/polyfill": "^7.10.4",
+        "@babel/preset-env": "^7.11.0",
+        "@babel/preset-typescript": "^7.10.4",
+        "chai": "4.1.2",
+        "chai-as-promised": "^7.1.1",
+        "eslint": "5.3.0",
+        "eslint-config-standard": "^11.0.0",
+        "eslint-plugin-import": "^2.13.0",
+        "eslint-plugin-node": "^6.0.1",
+        "eslint-plugin-promise": "^3.8.0",
+        "eslint-plugin-standard": "^3.1.0",
+        "mocha": "5.2.0",
+        "nodemon": "1.18.3",
+        "nyc": "^13.0.1"
+    },
+    "dependencies": {
+        "axios": "^0.19.2"
+    }
+}
