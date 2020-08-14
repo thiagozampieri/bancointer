@@ -33,7 +33,7 @@ export interface Boleto {
     cnpjCpfPagador: string,
     dataLimitePagamento: string,
     valorAbatimento: number,
-    situacaoPagamento: string,
+    situacao: string,
     desconto1: DescontoBoleto,
     desconto2: DescontoBoleto,
     desconto3: DescontoBoleto,

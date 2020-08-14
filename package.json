@@ -1,15 +1,12 @@
 {
     "name": "@azleads/bancointer",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "description": "API de integração com o banco inter",
-    "main": "index.js",
+    "main": "lib/index.js",
     "scripts": {
         "start": "babel-node src/index.ts --extensions \".ts\"",
         "compile-watch": "nodemon --exec npm run compile",
-        "compile": "babel --presets env -d lib/ src/",
-        "test": "nyc --reporter=text-summary npm run test:mocha || npm run test:mocha",
-        "test:mocha": "mocha --require babel-core/register --require babel-polyfill \"src/**/*.spec.js\"",
-        "test-it": "mocha --require babel-core/register --require babel-polyfill \"test-it/**/*.test-it.js\"",
+        "compile": "babel src --out-dir lib --extensions \".ts,.js\"",
         "postinstall": "npm run compile"
     },
     "author": "",

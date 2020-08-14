@@ -115,3 +115,4 @@ emissaoAPI.emitir({
 }).then((response) => {
     // Informações de boleto gerado
 })
+```
