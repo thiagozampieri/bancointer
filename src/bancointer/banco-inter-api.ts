@@ -22,11 +22,11 @@ export class BancoInterAPI {
         })
     }
 
-    public get(path) {
-        return axios.get(`${this.baseUrl}/${path}`, this.config())
+    public get(path: string, queryParams?: any): Promise<any> {
+        return axios.get(`${this.baseUrl}/${path}`, Object.assign(this.config(), { params: queryParams }))
     }
 
-    public post(path, data?) {
+    public post(path: string, data?: any): Promise<any> {
         return axios.post(`${this.baseUrl}/${path}`, data, this.config())
     }
 

@@ -35,10 +35,10 @@ const api = new BancoInterAPI(conta, cert, key, pass)
 ### Consulta de boleto
 
 ```js
-import { BoletosConsulta } from '@azleads/bancointer'
+import { ConsultaBoletos } from '@azleads/consultar'
 
-const consultaAPI = new BoletosConsulta(api)
-consultaAPI.consultaBoleto('00590733210').then((response) => {
+const consultaAPI = new ConsultaBoletos(api)
+consultaAPI.consultar('00590733210').then((response) => {
     // Informações do boleto
 })
 ```
@@ -46,9 +46,9 @@ consultaAPI.consultaBoleto('00590733210').then((response) => {
 ### Download de PDF de boleto
 
 ```js
-import { BoletosPDF } from '@azleads/bancointer'
+import { PdfBoletos } from '@azleads/bancointer'
 
-const pdfAPI = new BoletosPDF(api)
+const pdfAPI = new PdfBoletos(api)
 pdfAPI.download('00590733210', 'boleto.pdf').then((response) => {
     // Boleto salvo
 })
@@ -57,9 +57,9 @@ pdfAPI.download('00590733210', 'boleto.pdf').then((response) => {
 ### Emitir boletos
 
 ```js
-import { BoletosEmissao } from '@azleads/bancointer'
+import { EmissaoBoletos } from '@azleads/bancointer'
 
-const emissaoAPI = new BoletosEmissao(api)
+const emissaoAPI = new EmissaoBoletos(api)
 emissaoAPI.emitir({
     seuNumero: '00000',
     cnpjCPFBeneficiario: '<cnpj>',

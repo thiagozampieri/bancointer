@@ -1,6 +1,6 @@
 import { BancoInterAPI } from '../banco-inter-api'
 
-export class BoletosConsulta {
+export class ConsultaBoletos {
 
     constructor(
         private api: BancoInterAPI,
@@ -8,13 +8,13 @@ export class BoletosConsulta {
         this.api = api
     }
 
-    async consultar(nossoNumero: string): Promise<Boleto> {
+    async consultar(nossoNumero: string): Promise<ConsultaBoletosResponse> {
         const response = await this.api.get(`boletos/${nossoNumero}`)
         return response.data
     }
 
 }
-export interface Boleto {
+export interface ConsultaBoletosResponse {
     nomeBeneficiario: string,
     cnpjCpfBeneficiario: string,
     tipoPessoaBeneficiario: string,
@@ -34,28 +34,28 @@ export interface Boleto {
     dataLimitePagamento: string,
     valorAbatimento: number,
     situacao: string,
-    desconto1: DescontoBoleto,
-    desconto2: DescontoBoleto,
-    desconto3: DescontoBoleto,
-    multa: MultaBoleto,
-    mora: MoraBoleto,
+    desconto1: ConsultaBoletosResponseDesconto,
+    desconto2: ConsultaBoletosResponseDesconto,
+    desconto3: ConsultaBoletosResponseDesconto,
+    multa: ConsultaBoletosResponseMulta,
+    mora: ConsultaBoletosResponseMora,
 }
 
-export interface DescontoBoleto {
+export interface ConsultaBoletosResponseDesconto {
     codigo: string,
     data: string,
     taxa: number,
     valor: number,
 }
 
-export interface MultaBoleto {
+export interface ConsultaBoletosResponseMulta {
     codigo: string,
     data: string,
     taxa: number,
     valor: number,
 }
 
-export interface MoraBoleto {
+export interface ConsultaBoletosResponseMora {
     codigo: string,
     data: string,
     taxa: number,

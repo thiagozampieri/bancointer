@@ -1,7 +1,7 @@
 import { BancoInterAPI } from '../banco-inter-api'
 import fs from 'fs'
 
-export class BoletosPDF {
+export class PdfBoletos {
 
     constructor(
         private api: BancoInterAPI,

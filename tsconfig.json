@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "outDir": "./lib",
+        "lib": ["ES2020"],
+        "target": "ES5",
+        "module": "CommonJS",
+        "baseUrl": "./src",
+        "strict": true,
+        "declaration": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

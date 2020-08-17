@@ -1,11 +1,5 @@
-import { BancoInterAPI } from './bancointer/banco-inter-api'
-import { BoletosConsulta } from './bancointer/boletos/consulta'
-import { BoletosPDF } from './bancointer/boletos/pdf'
-import { BoletosEmissao } from './bancointer/boletos/emissao'
-
-module.exports = {
-    BancoInterAPI,
-    BoletosConsulta,
-    BoletosPDF,
-    BoletosEmissao,
-};
+export * from './bancointer/banco-inter-api'
+export * from './bancointer/boletos/consulta'
+export * from './bancointer/boletos/pdf'
+export * from './bancointer/boletos/emissao'
+export * from './bancointer/boletos/pesquisa'

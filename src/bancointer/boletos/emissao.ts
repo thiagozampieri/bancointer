@@ -1,6 +1,6 @@
 import { BancoInterAPI } from '../banco-inter-api'
 
-export class BoletosEmissao {
+export class EmissaoBoletos {
 
     constructor(
         private api: BancoInterAPI,
@@ -8,14 +8,14 @@ export class BoletosEmissao {
         this.api = api
     }
 
-    async emitir(data: Boleto): Promise<BoletoEmitido> {
+    async emitir(data: EmissaoBoletosParams): Promise<EmissaoBoletosResponse> {
         const response = await this.api.post(`boletos`, data)
         return response.data
     }
 
 }
 
-export interface Boleto {
+export interface EmissaoBoletosParams {
     seuNumero: string,
     cnpjCPFBeneficiario: string,
     valorNominal: number,
@@ -24,16 +24,16 @@ export interface Boleto {
     dataVencimento: string,
     numDiasAgenda: 'TRINTA' | 'SESSENTA',
     dataLimite: 'TRINTA' | 'SESSENTA',
-    pagador: PagadorBoleto,
-    mensagem?: MensagemBoleto,
-    desconto1: DescontoBoleto,
-    desconto2: DescontoBoleto,
-    desconto3: DescontoBoleto,
-    multa: MultaBoleto,
-    mora: MoraBoleto,
+    pagador: EmissaoBoletosParamsPagador,
+    mensagem?: EmissaoBoletosParamsMensagem,
+    desconto1: EmissaoBoletosParamsDesconto,
+    desconto2: EmissaoBoletosParamsDesconto,
+    desconto3: EmissaoBoletosParamsDesconto,
+    multa: EmissaoBoletosParamsMulta,
+    mora: EmissaoBoletosParamsMora,
 }
 
-export interface PagadorBoleto {
+export interface EmissaoBoletosParamsPagador {
     tipoPessoa: 'FISICA' | 'JURIDICA',
     nome: string,
     endereco: string,
@@ -49,7 +49,7 @@ export interface PagadorBoleto {
     telefone: string,
 }
 
-export interface MensagemBoleto {
+export interface EmissaoBoletosParamsMensagem {
     linha1: string,
     linha2: string,
     linha3: string,
@@ -57,28 +57,28 @@ export interface MensagemBoleto {
     linha5: string,
 }
 
-export interface DescontoBoleto {
+export interface EmissaoBoletosParamsDesconto {
     codigoDesconto: 'NAOTEMDESCONTO' | 'VALORFIXODATAINFORMADA' | 'PERCENTUALDATAINFORMADA' | 'VALORANTECIPACAODIACORRIDO' | 'VALORANTECIPACAODIAUTIL' | 'PERCENTUALVALORNOMINALDIACORRIDO' | 'PERCENTUALVALORNOMINALDIAUTIL',
     data: string,
     taxa: number,
     valor: number,
 }    
 
-export interface MultaBoleto {
+export interface EmissaoBoletosParamsMulta {
     codigoMulta: 'NAOTEMMULTA' | 'VALORFIXO' | 'PERCENTUAL',
     data?: string,
     taxa: number,
     valor: number,
 }    
 
-export interface MoraBoleto {
+export interface EmissaoBoletosParamsMora {
     codigoMora: 'VALORDIA' |'TAXAMENSAL' | 'ISENTO',
     data?: string,
     taxa: number,
     valor: number,
 }    
 
-export interface BoletoEmitido {
+export interface EmissaoBoletosResponse {
     seuNumero: string,
     nossoNumero: string,
     codigoBarras: string,

@@ -1,17 +1,21 @@
 {
     "name": "@azleads/bancointer",
-    "version": "1.1.2",
+    "version": "1.2.0",
     "description": "API de integração com o banco inter",
     "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "scripts": {
-        "start": "babel-node src/index.ts --extensions \".ts\"",
+        "check-types": "tsc",
         "compile-watch": "nodemon --exec npm run compile",
-        "compile": "babel src --out-dir lib --extensions \".ts,.js\"",
+        "compile": "babel src --out-dir lib --extensions \".ts,.js\" && tsc --emitDeclarationOnly",
+        "compile-tsc": "tsc --declaration",
         "postinstall": "npm run compile"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.10.4",
+        "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
         "chai": "4.1.2",
         "chai-as-promised": "^7.1.1",
         "eslint": "5.3.0",
@@ -22,15 +26,17 @@
         "eslint-plugin-standard": "^3.1.0",
         "mocha": "5.2.0",
         "nodemon": "1.18.3",
-        "nyc": "^13.0.1"
+        "nyc": "^13.0.1",
+        "typescript": "^3.9.7"
     },
     "dependencies": {
-        "axios": "^0.19.2",
         "@babel/cli": "^7.10.5",
         "@babel/core": "^7.11.1",
         "@babel/node": "^7.10.5",
         "@babel/polyfill": "^7.10.4",
         "@babel/preset-env": "^7.11.0",
-        "@babel/preset-typescript": "^7.10.4"
+        "@babel/preset-typescript": "^7.10.4",
+        "@types/node": "^14.0.27",
+        "axios": "^0.19.2"
     }
 }
