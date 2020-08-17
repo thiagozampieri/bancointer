@@ -5,7 +5,6 @@
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "scripts": {
-        "check-types": "tsc",
         "compile-watch": "nodemon --exec npm run compile",
         "compile": "babel src --out-dir lib --extensions \".ts,.js\" && tsc --emitDeclarationOnly",
         "compile-tsc": "tsc --declaration",
