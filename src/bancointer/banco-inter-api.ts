@@ -22,18 +22,29 @@ export class BancoInterAPI {
         })
     }
 
-    public get(path: string, queryParams?: any): Promise<any> {
-        return axios.get(`${this.baseUrl}/${path}`, Object.assign(this.config(), { params: queryParams }))
+    public async get(path: string, queryParams?: any): Promise<any> {
+        const response = await axios.get(`${this.baseUrl}/${path}`, Object.assign(this.config(), { params: queryParams }))
+        if (response.status !== 200) {
+            throw new Error(`Status ${response.status}: ${response.data.message}`)
+        }
+        return response
     }
 
-    public post(path: string, data?: any): Promise<any> {
-        return axios.post(`${this.baseUrl}/${path}`, data, this.config())
+    public async post(path: string, data?: any): Promise<any> {
+        const response = await axios.post(`${this.baseUrl}/${path}`, data, this.config())
+        if (response.status !== 200) {
+            throw new Error(`Status ${response.status}: ${response.data.message}`)
+        }
+        return response
     }
 
     private config() {
         return {
             httpsAgent: this.httpsAgent,
-            headers: this.headers()
+            headers: this.headers(),
+            validateStatus: (status: number) => {
+                return true
+            },
         }
     }
 
