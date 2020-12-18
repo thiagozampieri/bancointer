@@ -35,7 +35,7 @@ const api = new BancoInterAPI(conta, cert, key, pass)
 ### Consulta de boleto
 
 ```js
-import { ConsultaBoletos } from '@azleads/consultar'
+import { ConsultaBoletos } from '@azleads/bancointer'
 
 const consultaAPI = new ConsultaBoletos(api)
 consultaAPI.consultar('00590733210').then((response) => {

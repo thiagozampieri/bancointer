@@ -13,7 +13,7 @@ export class BancoInterAPI {
         public key: Buffer,
         public pass: string
     ) { 
-        this.baseUrl = 'https://apis.bancointer.com.br:8443/openbanking/v1/certificado'
+        this.baseUrl = 'https://apis.bancointer.com.br/openbanking/v1/certificado'
         this.httpsAgent = new https.Agent({
             rejectUnauthorized: false,
             cert: cert,
