@@ -33,7 +33,7 @@ export class BancoInterAPI {
     public async post(path: string, data?: any): Promise<any> {
         const response = await axios.post(`${this.baseUrl}/${path}`, data, this.config())
         if (response.status !== 200) {
-            throw new Error(`Status ${response.status}: ${response.data.message}`)
+            throw new Error(`Status ${response.status}: ${response.data.message || (response.data.messages || []).join(',')}`)
         }
         return response
     }
