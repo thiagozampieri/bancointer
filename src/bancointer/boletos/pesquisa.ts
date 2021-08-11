@@ -17,6 +17,7 @@ export class PesquisaBoletos {
 
 export interface PesquisaBoletosParams {
     filtrarPor: 'TODOS' | 'VENCIDOSAVENCER' | 'EXPIRADOS' | 'PAGOS' | 'TODOSBAIXADOS',
+    filtrarDataPor: 'VENCIMENTO' | 'EMISSAO' | 'SITUACAO',
     dataInicial: string,
     dataFinal: string,
     ordenarPor: 'NOSSONUMERO' | 'SEUNUMER' | 'DATAVENCIMENTO_AS' | 'DATAVENCIMENTO_DS' | 'NOMESACAD' | 'VALOR_AS' | 'VALOR_DS' | 'STATUS_AS' | 'STATUS_DS',
