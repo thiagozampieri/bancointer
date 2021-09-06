@@ -54,7 +54,7 @@ export interface PesquisaBoletosResponseContent {
     cnpjCpfSacado: string,
     nomeSacado: string,
     situacao: string,
-    dataPagtoBaixa: string,
+    dataHoraSituacao: string,
     dataVencimento: string,
     valorNominal: number,
     telefone: string,
