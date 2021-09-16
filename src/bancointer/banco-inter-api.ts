@@ -1,6 +1,7 @@
 import axios from 'axios'
 import https from 'https'
 import { Agent } from 'http'
+import { ResponseError } from './response-error'
 
 export class BancoInterAPI {
 
@@ -25,7 +26,7 @@ export class BancoInterAPI {
     public async get(path: string, queryParams?: any): Promise<any> {
         const response = await axios.get(`${this.baseUrl}/${path}`, Object.assign(this.config(), { params: queryParams }))
         if (response.status !== 200) {
-            throw new Error(`Status ${response.status}: ${response.data.message}`)
+            throw new ResponseError(response.data.message, response.status)
         }
         return response
     }
@@ -33,7 +34,7 @@ export class BancoInterAPI {
     public async post(path: string, data?: any): Promise<any> {
         const response = await axios.post(`${this.baseUrl}/${path}`, data, this.config())
         if (response.status !== 200) {
-            throw new Error(`Status ${response.status}: ${response.data.message || (response.data.messages || []).join(',')}`)
+            throw new ResponseError(response.data.message, response.status)
         }
         return response
     }
