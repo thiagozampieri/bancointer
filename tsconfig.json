@@ -1,7 +1,10 @@
 {
     "compilerOptions": {
         "outDir": "./lib",
-        "lib": ["ES2020"],
+        "lib": [
+            "ES2020",
+            "DOM"
+        ],
         "target": "ES5",
         "module": "CommonJS",
         "baseUrl": "./src",
