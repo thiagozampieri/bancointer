@@ -1,6 +1,6 @@
 {
     "name": "@azleads/bancointer",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "API de integração com o banco inter",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
