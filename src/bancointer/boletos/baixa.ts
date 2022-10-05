@@ -9,7 +9,7 @@ export class BaixaBoleto {
     }
 
     async baixar(data: BaixaBoletoParams): Promise<any> {
-        const response = await this.api.post(`cobranca/v2/boletos/${data.nossoNumero}/cancelar`, { codigoBaixa: data.codigoBaixa })
+        const response = await this.api.post(`cobranca/v2/boletos/${data.nossoNumero}/cancelar`, { motivoCancelamento: data.motivoCancelamento })
         return response.data
     }
 
@@ -17,5 +17,5 @@ export class BaixaBoleto {
 
 export interface BaixaBoletoParams {
     nossoNumero: string,
-    codigoBaixa: 'ACERTOS' | 'PROTESTADO' | 'DEVOLUCAO' | 'PROTESTOAPOSBAIXA' | 'PAGODIRETOAOCLIENTE' | 'SUBISTITUICAO' | 'FALTADESOLUCAO' | 'APEDIDODOCLIENTE'
+    motivoCancelamento: 'ACERTOS' | 'APEDIDODOCLIENTE' | 'PAGODIRETOAOCLIENTE' | 'SUBSTITUICAO',
 }

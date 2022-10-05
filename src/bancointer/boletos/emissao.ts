@@ -17,13 +17,10 @@ export class EmissaoBoletos {
 
 export interface EmissaoBoletosParams {
     seuNumero: string,
-    cnpjCPFBeneficiario: string,
     valorNominal: number,
-    valorAbatimento: number,
-    dataEmissao: string,
     dataVencimento: string,
-    numDiasAgenda: 'TRINTA' | 'SESSENTA',
-    dataLimite: 'TRINTA' | 'SESSENTA',
+    numDiasAgenda: number,
+    beneficiarioFinal: EmissaoBoletosParamsBeneficiario,
     pagador: EmissaoBoletosParamsPagador,
     mensagem?: EmissaoBoletosParamsMensagem,
     desconto1: EmissaoBoletosParamsDesconto,
@@ -33,6 +30,16 @@ export interface EmissaoBoletosParams {
     mora: EmissaoBoletosParamsMora,
 }
 
+export interface EmissaoBoletosParamsBeneficiario {
+    nome: string,
+    cpfCnpj: string,
+    tipoPessoa: 'FISICA' | 'JURIDICA',
+    cep: string,
+    endereco: string,
+    bairro: string,
+    cidade: string,
+    uf: string,
+}
 export interface EmissaoBoletosParamsPagador {
     tipoPessoa: 'FISICA' | 'JURIDICA',
     nome: string,
@@ -58,25 +65,25 @@ export interface EmissaoBoletosParamsMensagem {
 }
 
 export interface EmissaoBoletosParamsDesconto {
-    codigoDesconto: 'NAOTEMDESCONTO' | 'VALORFIXODATAINFORMADA' | 'PERCENTUALDATAINFORMADA' | 'VALORANTECIPACAODIACORRIDO' | 'VALORANTECIPACAODIAUTIL' | 'PERCENTUALVALORNOMINALDIACORRIDO' | 'PERCENTUALVALORNOMINALDIAUTIL',
+    codigoDesconto: 'NAOTEMDESCONTO' | 'VALORFIXODATAINFORMADA' | 'PERCENTUALDATAINFORMADA',
     data: string,
     taxa: number,
     valor: number,
-}    
+}
 
 export interface EmissaoBoletosParamsMulta {
     codigoMulta: 'NAOTEMMULTA' | 'VALORFIXO' | 'PERCENTUAL',
     data?: string,
     taxa: number,
     valor: number,
-}    
+}
 
 export interface EmissaoBoletosParamsMora {
-    codigoMora: 'VALORDIA' |'TAXAMENSAL' | 'ISENTO',
+    codigoMora: 'VALORDIA' | 'TAXAMENSAL' | 'ISENTO',
     data?: string,
     taxa: number,
     valor: number,
-}    
+}
 
 export interface EmissaoBoletosResponse {
     seuNumero: string,
