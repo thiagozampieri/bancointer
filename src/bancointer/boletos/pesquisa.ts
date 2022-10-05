@@ -9,7 +9,7 @@ export class PesquisaBoletos {
     }
 
     async pesquisar(params: PesquisaBoletosParams): Promise<PesquisaBoletosResponse> {
-        const response = await this.api.get(`boletos`, params)
+        const response = await this.api.get(`cobranca/v2/boletos`, params)
         return response.data
     }
 

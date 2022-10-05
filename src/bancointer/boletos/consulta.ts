@@ -9,7 +9,7 @@ export class ConsultaBoletos {
     }
 
     async consultar(nossoNumero: string): Promise<ConsultaBoletosResponse> {
-        const response = await this.api.get(`boletos/${nossoNumero}`)
+        const response = await this.api.get(`cobranca/v2/boletos/${nossoNumero}`)
         return response.data
     }
 

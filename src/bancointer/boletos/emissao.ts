@@ -9,7 +9,7 @@ export class EmissaoBoletos {
     }
 
     async emitir(data: EmissaoBoletosParams): Promise<EmissaoBoletosResponse> {
-        const response = await this.api.post(`boletos`, data)
+        const response = await this.api.post(`cobranca/v2/boletos`, data)
         return response.data
     }
 

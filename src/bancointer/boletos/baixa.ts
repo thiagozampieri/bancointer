@@ -9,7 +9,7 @@ export class BaixaBoleto {
     }
 
     async baixar(data: BaixaBoletoParams): Promise<any> {
-        const response = await this.api.post(`boletos/${data.nossoNumero}/baixas`, { codigoBaixa: data.codigoBaixa })
+        const response = await this.api.post(`cobranca/v2/boletos/${data.nossoNumero}/cancelar`, { codigoBaixa: data.codigoBaixa })
         return response.data
     }
 
