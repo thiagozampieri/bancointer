@@ -9,20 +9,25 @@ export class PesquisaBoletos {
     }
 
     async pesquisar(params: PesquisaBoletosParams): Promise<PesquisaBoletosResponse> {
-        const response = await this.api.get(`boletos`, params)
+        const response = await this.api.get(`cobranca/v2/boletos`, params)
         return response.data
     }
 
 }
 
 export interface PesquisaBoletosParams {
-    filtrarPor: 'TODOS' | 'VENCIDOSAVENCER' | 'EXPIRADOS' | 'PAGOS' | 'TODOSBAIXADOS',
-    filtrarDataPor: 'VENCIMENTO' | 'EMISSAO' | 'SITUACAO',
     dataInicial: string,
     dataFinal: string,
-    ordenarPor: 'NOSSONUMERO' | 'SEUNUMER' | 'DATAVENCIMENTO_AS' | 'DATAVENCIMENTO_DS' | 'NOMESACAD' | 'VALOR_AS' | 'VALOR_DS' | 'STATUS_AS' | 'STATUS_DS',
-    page: number,
-    size: number,
+    nome: string,
+    email: string,
+    cpfCnpj: string,
+    nossoNumero: string,
+    itensPorPagina: number,
+    paginaAtual: number,
+    situacao: 'EXPIRADO' | 'VENCIDO' | 'EMABERTO' | 'PAGO' | 'CANCELADO',
+    filtrarDataPor: 'VENCIMENTO' | 'EMISSAO' | 'SITUACAO',
+    ordenarPor: 'PAGADOR' | 'NOSSONUMERO' | 'SEUNUMERO' | 'DATASITUACAO' | 'DATAVENCIMENTO' | 'VALOR' | 'STATUS'
+    tipoOrdenacao: 'ASC' | 'DESC',
 }
 
 export interface PesquisaBoletosResponse {
@@ -32,44 +37,33 @@ export interface PesquisaBoletosResponse {
     last: boolean,
     first: boolean,
     size: number,
-    summary: PesquisaBoletosResponseSumario,
     content: PesquisaBoletosResponseContent[],
 }
 
-export interface PesquisaBoletosResponseSumario {
-    recebidos: PesquisaBoletosResponseSumarioDetalhes,
-    previstos: PesquisaBoletosResponseSumarioDetalhes,
-    baixados: PesquisaBoletosResponseSumarioDetalhes,
-    expirados: PesquisaBoletosResponseSumarioDetalhes,
-}
-
-export interface PesquisaBoletosResponseSumarioDetalhes {
-    quantidade: number,
-    valor: number,
-}
-
 export interface PesquisaBoletosResponseContent {
+    nomeBeneficiario: string,
+    cnpjCpfBeneficiario: string,
+    tipoPessoaBeneficiario: string,
+    contaCorrente: string,
     nossoNumero: string,
     seuNumero: string,
-    cnpjCpfSacado: string,
-    nomeSacado: string,
     situacao: string,
     dataHoraSituacao: string,
     dataVencimento: string,
-    valorNominal: number,
-    telefone: string,
-    emailPagador: string,
+    valorNominal: string,
     dataEmissao: string,
     dataLimite: string,
+    codigoEspecie: string,
+    codigoBarras: string,
     linhaDigitavel: string,
-    valorJuros: number,
-    valorMulta: number,
+    origem: string,
+    pagador: PesquisaBoletosResponseContentPagador,
+    mensagem: PesquisaBoletosResponseContentMensagem,
     desconto1: PesquisaBoletosResponseContentDesconto,
     desconto2: PesquisaBoletosResponseContentDesconto,
     desconto3: PesquisaBoletosResponseContentDesconto,
     multa: PesquisaBoletosResponseContentMulta,
     mora: PesquisaBoletosResponseContentMora,
-    valorAbatimento: number,
 }
 
 export interface PesquisaBoletosResponseContentDesconto {
@@ -77,6 +71,14 @@ export interface PesquisaBoletosResponseContentDesconto {
     data: string,
     taxa: number,
     valor: number,
+}
+
+export interface PesquisaBoletosResponseContentMensagem {
+    linha1: string,
+    linha2: string,
+    linha3: string,
+    linha4: string,
+    linha5: string,
 }
 
 export interface PesquisaBoletosResponseContentMulta {
@@ -91,4 +93,19 @@ export interface PesquisaBoletosResponseContentMora {
     data: string,
     taxa: number,
     valor: number,
+}
+export interface PesquisaBoletosResponseContentPagador {
+    cpfCnpj: string,
+    tipoPessoa: string,
+    nome: string,
+    endereco: string,
+    numero: string,
+    complemento: string,
+    bairro: string,
+    cidade: string,
+    uf: string,
+    cep: string,
+    email: string,
+    ddd: string,
+    telefone: string,
 }
