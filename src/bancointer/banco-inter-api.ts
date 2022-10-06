@@ -1,4 +1,5 @@
 import axios from 'axios'
+import querystring from 'querystring'
 import https from 'https'
 import { Agent } from 'http'
 import { ResponseError } from './response-error'
@@ -16,19 +17,15 @@ export class BancoInterAPI {
     public key: Buffer,
     public clientId: string,
     public clientSecret: string,
-    public pass: string,
-  ) { 
-    this.baseUrl = 'https://cdpj.partners.bancointer.com.br/'
+  ) {
+    this.baseUrl = 'https://cdpj.partners.bancointer.com.br'
     this.credentials.clientId = clientId
     this.credentials.clientSecret = clientSecret
     this.httpsAgent = new https.Agent({
       rejectUnauthorized: false,
       cert,
       key,
-      passphrase: pass
     })
-
-    this.connect();
   }
 
   public async get(path: string, queryParams?: any): Promise<any> {
@@ -50,16 +47,17 @@ export class BancoInterAPI {
 
   public async connect() {
     const path = 'oauth/v2/token'
-    const data = {
+    const data = querystring.stringify({
       client_id: this.credentials.clientId,
       client_secret: this.credentials.clientSecret,
       grant_type: 'client_credentials',
-      scope: 'extrato.read boleto-cobranca.read boleto-cobranca.write pagamento-boleto.write pagamento-boleto.read'
-    }
+      scope: 'extrato.read boleto-cobranca.read boleto-cobranca.write pagamento-boleto.write pagamento-boleto.read',
+    })
+
     const response = await axios.post(`${this.baseUrl}/${path}`, data, {
       httpsAgent: this.httpsAgent,
       headers: {
-        'content-type': 'application/json',
+        'content-type': 'application/x-www-form-urlencoded',
       },
       validateStatus: (status: number) => true,
     })
@@ -69,6 +67,7 @@ export class BancoInterAPI {
 
     const { access_token } = response.data
     this.accessToken = access_token
+    return access_token;
   }
 
   private config() {
@@ -81,7 +80,6 @@ export class BancoInterAPI {
 
   private headers() {
     return {
-      'x-inter-conta-corrente': this.conta,
       'content-type': 'application/json',
       Authorization: `Bearer ${this.accessToken}`,
     }
