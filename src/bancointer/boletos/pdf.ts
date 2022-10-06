@@ -12,7 +12,7 @@ export class PdfBoletos {
         return new Promise(async (resolve, reject) => {
             try {
                 const response = await this.api.get(`cobranca/v2/boletos/${nossoNumero}/pdf`)
-                const base64 = response.data
+                const base64 = response.data.pdf
                 // if (err) reject(err)
                 resolve(base64)
             } catch (err) {

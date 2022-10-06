@@ -32,15 +32,15 @@ export class BancoInterAPI {
     const response = await axios
       .get(`${this.baseUrl}/${path}`, Object.assign(this.config(), { params: queryParams }))
     if (response.status !== 200) {
-      throw new ResponseError(response.data.message, response.status)
+      throw new ResponseError(response.data.detail, response.data.violacoes, response.status)
     }
     return response
   }
 
   public async post(path: string, data?: any): Promise<any> {
     const response = await axios.post(`${this.baseUrl}/${path}`, data, this.config())
-    if (response.status !== 200) {
-      throw new ResponseError(response.data.message, response.status)
+    if (response.status !== 200 && response.status !== 204) {
+      throw new ResponseError(response.data.detail, response.data.violacoes, response.status)
     }
     return response
   }
@@ -62,7 +62,7 @@ export class BancoInterAPI {
       validateStatus: (status: number) => true,
     })
     if (response.status !== 200) {
-      throw new ResponseError(response.data.message, response.status)
+      throw new ResponseError(response.data.detail, response.data.violacoes, response.status)
     }
 
     const { access_token } = response.data
