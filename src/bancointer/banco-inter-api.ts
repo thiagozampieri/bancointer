@@ -15,6 +15,7 @@ export class BancoInterAPI {
     public conta: string,
     public cert: Buffer,
     public key: Buffer,
+    public ca: Buffer,
     public clientId: string,
     public clientSecret: string,
   ) {
@@ -25,6 +26,7 @@ export class BancoInterAPI {
       rejectUnauthorized: false,
       cert,
       key,
+      ca
     })
   }
 
@@ -39,6 +41,14 @@ export class BancoInterAPI {
 
   public async post(path: string, data?: any): Promise<any> {
     const response = await axios.post(`${this.baseUrl}/${path}`, data, this.config())
+    if (response.status !== 200 && response.status !== 204) {
+      throw new ResponseError(response.data.detail, response.data.violacoes, response.status)
+    }
+    return response
+  }
+
+  public async put(path: string, data?: any): Promise<any> {
+    const response = await axios.put(`${this.baseUrl}/${path}`, data, this.config())
     if (response.status !== 200 && response.status !== 204) {
       throw new ResponseError(response.data.detail, response.data.violacoes, response.status)
     }
@@ -62,7 +72,7 @@ export class BancoInterAPI {
       validateStatus: (status: number) => true,
     })
     if (response.status !== 200) {
-      throw new ResponseError(response.data.detail, response.data.violacoes, response.status)
+      throw new ResponseError(response.data.error_title, response.data, response.status)
     }
 
     const { access_token } = response.data
