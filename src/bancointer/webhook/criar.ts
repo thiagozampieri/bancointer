@@ -9,14 +9,8 @@ export class CriarWebhook {
     this.api = api
   }
 
-  criar(webhookUrl: string): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await this.api.put(`cobranca/v2/boletos/webhook`, { webhookUrl })
-        return response
-      } catch (err) {
-        reject(err)
-      }
-    })
+  async criar(webhookUrl: string): Promise<any> {
+    const response = await this.api.put(`cobranca/v2/boletos/webhook`, { webhookUrl })
+    return response
   }
 }
