@@ -1,4 +1,3 @@
-import { ResponseError } from 'bancointer/response-error'
 import { BancoInterAPI } from '../banco-inter-api'
 
 export class CriarWebhook {
