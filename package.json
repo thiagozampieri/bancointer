@@ -10,7 +10,7 @@
         "compile-tsc": "tsc --declaration",
         "postinstall": "npm run compile"
     },
-    "author": "",
+    "author": "Thiago Zampieri <thiago.zampieri@gmail.com>",
     "license": "ISC",
     "homepage": "https://github.com/thiagozampieri/bancointer.git#readme",
     "devDependencies": {
