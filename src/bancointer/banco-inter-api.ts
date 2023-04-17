@@ -92,6 +92,7 @@ export class BancoInterAPI {
     return {
       'content-type': 'application/json',
       Authorization: `Bearer ${this.accessToken}`,
+      'x-conta-corrente': this.conta,
     }
   }
 }
