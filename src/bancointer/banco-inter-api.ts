@@ -41,7 +41,7 @@ export class BancoInterAPI {
 
   public async post(path: string, data?: any): Promise<any> {
     const response = await axios.post(`${this.baseUrl}/${path}`, data, this.config())
-    if (response.status !== 200 && response.status !== 204) {
+    if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
       throw new ResponseError(response.data.detail, response.data.violacoes, response.status)
     }
     return response
@@ -49,7 +49,15 @@ export class BancoInterAPI {
 
   public async put(path: string, data?: any): Promise<any> {
     const response = await axios.put(`${this.baseUrl}/${path}`, data, this.config())
-    if (response.status !== 200 && response.status !== 204) {
+    if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
+      throw new ResponseError(response.data.detail, response.data.violacoes, response.status)
+    }
+    return response
+  }
+
+  public async patch(path: string, data?: any): Promise<any> {
+    const response = await axios.patch(`${this.baseUrl}/${path}`, data, this.config())
+    if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
       throw new ResponseError(response.data.detail, response.data.violacoes, response.status)
     }
     return response
@@ -61,7 +69,7 @@ export class BancoInterAPI {
       client_id: this.credentials.clientId,
       client_secret: this.credentials.clientSecret,
       grant_type: 'client_credentials',
-      scope: 'extrato.read boleto-cobranca.read boleto-cobranca.write pagamento-boleto.write pagamento-boleto.read',
+      scope: 'extrato.read boleto-cobranca.read boleto-cobranca.write pagamento-boleto.write pagamento-boleto.read pagamento-darf.write cob.write cob.read pix.write pix.read webhook.read webhook.write payloadlocation.write payloadlocation.read pagamento-pix.write pagamento-pix.read webhook-banking.write webhook-banking.read',
     })
 
     const response = await axios.post(`${this.baseUrl}/${path}`, data, {
