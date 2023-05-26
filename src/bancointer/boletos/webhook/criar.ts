@@ -1,6 +1,6 @@
-import { BancoInterAPI } from '../banco-inter-api'
+import { BancoInterAPI } from '../../banco-inter-api'
 
-export class CriarWebhook {
+export class CriarBoletoWebhook {
 
   constructor(
     private api: BancoInterAPI,
