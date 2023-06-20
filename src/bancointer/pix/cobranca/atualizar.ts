@@ -9,7 +9,7 @@ export class AtualizarPix {
   }
 
   async atualizar(txid: string, data: AtualizarPixParams | AtualzarPixCancelParams): Promise<AtualizarPixResponse> {
-    const response = await this.api.patch(`pix/v2/cob/${txid}`, data)
+    const response = await this.api.patch(`pix/v2/cobv/${txid}`, data)
     return response.data
   }
 
@@ -22,36 +22,11 @@ export interface AtualzarPixCancelParams {
 export interface AtualizarPixParams {
   chave: string,
   solicitacaoPagador: string,
-  calendario: AtualizarPixParamsCalendario,
-  devedor: AtualizarPixParamsDevedor,
-  valor: AtualizarPixParamsValor,
-  infoAdicionais: AtualizarPixParamsInfoAdicionais[],
-  loc: AtualizarPixParamsLoc
-}
-
-export interface AtualizarPixParamsCalendario {
-  expiracao: number,
-}
-
-export interface AtualizarPixParamsDevedor {
-  nome: string,
-  cpf: string,
-  cnpj: string,
-}
-
-export interface AtualizarPixParamsValor {
-  original: string,
-  modalidadeAlteracao: number,
-}
-
-export interface AtualizarPixParamsInfoAdicionais {
-  nome: string,
-  valor: string,
-}
-
-
-export interface AtualizarPixParamsLoc {
-  tipoCob: 'cob' | 'cobv'
+  calendario: AtualizarPixCalendario,
+  devedor: AtualizarPixPessoa,
+  valor: AtualizarPixValor,
+  infoAdicionais: AtualizarPixInfoAdicionais[],
+  loc: AtualizarPixLoc
 }
 
 export interface AtualizarPixResponse {
@@ -62,41 +37,76 @@ export interface AtualizarPixResponse {
   pixCopiaECola: string,
   chave: string,
   solicitacaoPagador: string,
-  devedor: AtualizarPixParamsDevedor,
+  devedor: AtualizarPixPessoa,
+  recebedor: AtualizarPixPessoa,
+  valor: AtualizarPixValor,
+  calendario: AtualizarPixCalendario,
+  infoAdicionais: AtualizarPixInfoAdicionais[]
   loc: AtualizarPixResponseLoc,
-  valor: AtualizarPixResponseValor,
-  calendario: AtualizarPixResponseCalendario,
-  infoAdicionais: AtualizarPixParamsInfoAdicionais[]
+}
+
+export interface AtualizarPixCalendario {
+  dataVencimento: string,
+  validadeAposVencimento: number,
+}
+
+export interface AtualizarPixPessoa {
+  nome: string,
+  cpf: string,
+  cnpj: string,
+}
+
+export interface AtualizarPixValor {
+  original: string,
+  multa: AtualizarPixValorMulta,
+  juros: AtualizarPixValorJuros,
+  abatimento: AtualizarPixValorAbatimento,
+  desconto: AtualizarPixValorDescontoPerc | AtualizarPixValorDescontoDataFixa
+}
+
+export interface AtualizarPixValorMulta {
+  modalidade: 1 | 2,
+  valorPerc: string,
+}
+
+export interface AtualizarPixValorJuros {
+  modalidade: number,
+  valorPerc: string,
+}
+
+export interface AtualizarPixValorAbatimento {
+  modalidade: 1 | 2,
+  valorPerc: string,
+}
+
+export interface AtualizarPixValorDescontoPerc {
+  modalidade: string,
+  valorPerc: string,
+}
+
+export interface AtualizarPixValorDescontoDataFixa {
+  descontoDataFixa: AtualizarPixValorDescontoDataFixaArray[],
+  modalidade: string,
+}
+
+export interface AtualizarPixValorDescontoDataFixaArray {
+  data: string,
+  valorPerc: string,
+}
+
+export interface AtualizarPixInfoAdicionais {
+  nome: string,
+  valor: string,
+}
+
+
+export interface AtualizarPixLoc {
+  tipoCob: 'cob' | 'cobv'
 }
 
 export interface AtualizarPixResponseLoc {
   id: number,
   location: string,
   tipoCob: 'cob' | 'cobv',
-  criacao: Date,
-}
-
-export interface AtualizarPixResponseValor {
-  original: string,
-  modalidadeAlteracao: number,
-  retirada: AtualizarPixResponseValorRetiradaSaque | AtualizarPixResponseValorRetiradaTroco
-}
-
-export interface AtualizarPixResponseValorRetiradaSaque {
-  valor: string,
-  modalidadeAlteracao: number,
-  modalidadeAgente: 'AGTEC' | 'AGTOT' | 'AGPSS',
-  prestadorDoServicoDeSaque: string,
-}
-
-export interface AtualizarPixResponseValorRetiradaTroco {
-  valor: string,
-  modalidadeAlteracao: number,
-  modalidadeAgente: 'AGTEC' | 'AGTOT',
-  prestadorDoServicoDeSaque: string,
-}
-
-export interface AtualizarPixResponseCalendario {
-  expiracao: number,
   criacao: Date,
 }

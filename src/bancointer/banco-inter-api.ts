@@ -69,7 +69,7 @@ export class BancoInterAPI {
       client_id: this.credentials.clientId,
       client_secret: this.credentials.clientSecret,
       grant_type: 'client_credentials',
-      scope: 'extrato.read boleto-cobranca.read boleto-cobranca.write pagamento-boleto.write pagamento-boleto.read pagamento-darf.write cob.write cob.read pix.write pix.read webhook.read webhook.write payloadlocation.write payloadlocation.read pagamento-pix.write pagamento-pix.read webhook-banking.write webhook-banking.read',
+      scope: 'extrato.read boleto-cobranca.read boleto-cobranca.write pagamento-boleto.write pagamento-boleto.read pagamento-darf.write payloadlocation.write payloadlocation.read cobv.write cobv.read cob.write cob.read pix.write pix.read webhook.read webhook.write payloadlocation.write payloadlocation.read pagamento-pix.write pagamento-pix.read webhook-banking.write webhook-banking.read',
     })
 
     const response = await axios.post(`${this.baseUrl}/${path}`, data, {

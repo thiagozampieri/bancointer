@@ -9,7 +9,7 @@ export class ConsultaPix {
   }
 
   async consultar(txid: string): Promise<ConsultaPixResponse> {
-    const response = await this.api.get(`pix/v2/cob/${txid}`)
+    const response = await this.api.get(`pix/v2/cobv/${txid}`)
     return response.data
   }
 
@@ -22,86 +22,101 @@ export interface ConsultaPixResponse {
   pixCopiaECola: string,
   chave: string,
   solicitacaoPagador: string,
-  devedor: ConsultaPixResponseDevedorPessoaFisica | ConsultaPixResponseDevedorPessoaJuridica,
-  loc: ConsultaPixResponseLoc,
-  valor: ConsultaPixResponseValor,
-  calendario: ConsultaPixResponseCalendario,
-  infoAdicionais: ConsultaPixResponseInfoAdicionais[],
-  pix: ConsultaPixResponsePix,
+  devedor: ConsultaPixDevedorPessoaFisica | ConsultaPixDevedorPessoaJuridica,
+  recebedor: ConsultaPixDevedorPessoaFisica | ConsultaPixDevedorPessoaJuridica,
+  loc: ConsultaPixLoc,
+  valor: ConsultaPixValor,
+  calendario: ConsultaPixCalendario,
+  infoAdicionais: ConsultaPixInfoAdicionais[],
+  pix: ConsultaPix,
 }
 
-export interface ConsultaPixResponseDevedorPessoaJuridica {
+export interface ConsultaPixDevedorPessoaJuridica {
   nome: string,
   cnpj: string,
 }
 
-export interface ConsultaPixResponseDevedorPessoaFisica {
+export interface ConsultaPixDevedorPessoaFisica {
   nome: string,
   cpf: string,
 }
 
-export interface ConsultaPixResponseLoc {
+export interface ConsultaPixLoc {
   id: number,
   location: string,
   tipoCob: 'cob' | 'cobv',
   criacao: string,
 }
 
-export interface ConsultaPixResponseValor {
+export interface ConsultaPixValor {
   original: string,
-  modalidadeAlteracao: number,
-  retirada: ConsultaPixResponseValorRetirada
+  multa: ConsultarPixResponseValorMulta,
+  juros: ConsultarPixResponseValorJuros,
+  abatimento: ConsultarPixResponseValorAbatimento,
+  desconto: ConsultarPixResponseValorDescontoPerc | ConsultarPixResponseValorDescontoDataFixa
 }
 
-export interface ConsultaPixResponseValorRetirada {
-  saque: ConsultaPixResponseValorRetiradaSaque,
-  troco: ConsultaPixResponseValorRetiradaTroco
+export interface ConsultarPixResponseValorMulta {
+  modalidade: 1 | 2,
+  valorPerc: string,
 }
 
-export interface ConsultaPixResponseValorRetiradaSaque {
-  valor: string,
-  modalidadeAlteracao: number,
-  modalidadeAgente: 'AGTEC' | 'AGTOT' | 'AGPSS',
-  prestadorDoServicoDeSaque: string,
+export interface ConsultarPixResponseValorJuros {
+  modalidade: number,
+  valorPerc: string,
 }
 
-export interface ConsultaPixResponseValorRetiradaTroco {
-  valor: string,
-  modalidadeAlteracao: number,
-  modalidadeAgente: 'AGTEC' | 'AGTOT',
-  prestadorDoServicoDeSaque: string,
+export interface ConsultarPixResponseValorAbatimento {
+  modalidade: 1 | 2,
+  valorPerc: string,
 }
 
-export interface ConsultaPixResponseCalendario {
-  expiracao: number,
-  criacao: string,
+export interface ConsultarPixResponseValorDescontoPerc {
+  modalidade: string,
+  valorPerc: string,
 }
 
-export interface ConsultaPixResponseInfoAdicionais {
+export interface ConsultarPixResponseValorDescontoDataFixa {
+  descontoDataFixa: ConsultarPixResponseValorDescontoDataFixaArray[],
+  modalidade: string,
+}
+
+export interface ConsultarPixResponseValorDescontoDataFixaArray {
+  data: string,
+  valorPerc: string,
+}
+
+export interface ConsultaPixCalendario {
+  criacao: Date,
+  dataDeVencimento: Date,
+  validadeAposVencimento: number,
+}
+
+export interface ConsultaPixInfoAdicionais {
   nome: string,
   valor: string,
 }
 
-export interface ConsultaPixResponsePix {
+export interface ConsultaPix {
   endToEndId: string,
   txid: string,
   valor: string,
   chave: string,
   horario: string,
   infoPagador: string,
-  devolucoes: ConsultaPixResponsePixDevolucoes[]
+  devolucoes: ConsultaPixDevolucoes[]
 }
 
-export interface ConsultaPixResponsePixDevolucoes {
+export interface ConsultaPixDevolucoes {
   id: string,
   rtrId: string,
   valor: string,
   status: 'EM_PROCESSAMENTO' | 'DEVOLVIDO' | 'NAO_REALIZADO',
   motivo: string,
-  horario: ConsultaPixResponsePixDevolucoesHorario,
+  horario: ConsultaPixDevolucoesHorario,
 }
 
-export interface ConsultaPixResponsePixDevolucoesHorario {
+export interface ConsultaPixDevolucoesHorario {
   solicitacao: string,
   liquidacao: string,
 }
