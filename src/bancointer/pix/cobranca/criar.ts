@@ -8,8 +8,8 @@ export class CriarPix {
     this.api = api
   }
 
-  async criar(data: CriarPixParams): Promise<CriarPixResponse> {
-    const response = await this.api.post(`pix/v2/cob`, data)
+  async criar(txid: string, data: CriarPixParams): Promise<CriarPixResponse> {
+    const response = await this.api.put(`pix/v2/cobv/${txid}`, data)
     return response.data
   }
 
@@ -18,40 +18,11 @@ export class CriarPix {
 export interface CriarPixParams {
   chave: string,
   solicitacaoPagador: string,
-  calendario: CriarPixParamsCalendario,
-  devedor: CriarPixParamsDevedorFisica | CriarPixParamsDevedorJuridica,
-  valor: CriarPixParamsValor,
+  calendario: CriarPixCalendario,
+  devedor: CriarPixPessoa,
+  valor: CriarPixValor,
   infoAdicionais: CriarPixParamsInfoAdicionais[],
   loc: CriarPixParamsLoc
-}
-
-export interface CriarPixParamsCalendario {
-  expiracao: number,
-}
-
-export interface CriarPixParamsDevedorFisica {
-  nome: string,
-  cpf: string,
-}
-
-export interface CriarPixParamsDevedorJuridica {
-  nome: string,
-  cnpj: string,
-}
-
-export interface CriarPixParamsValor {
-  original: string,
-  modalidadeAlteracao: number,
-}
-
-export interface CriarPixParamsInfoAdicionais {
-  nome: string,
-  valor: string,
-}
-
-
-export interface CriarPixParamsLoc {
-  tipoCob: 'cob' | 'cobv'
 }
 
 export interface CriarPixResponse {
@@ -62,41 +33,84 @@ export interface CriarPixResponse {
   pixCopiaECola: string,
   chave: string,
   solicitacaoPagador: string,
-  devedor: CriarPixParamsDevedorFisica | CriarPixParamsDevedorJuridica,
+  devedor: CriarPixPessoa,
+  recebedor: CriarPixPessoa,
   loc: CriarPixResponseLoc,
-  valor: CriarPixResponseValor,
-  calendario: CriarPixResponseCalendario,
+  valor: CriarPixValor,
+  calendario: CriarPixCalendario,
   infoAdicionais: CriarPixParamsInfoAdicionais[]
+}
+
+export interface CriarPixCalendario {
+  dataVencimento: string,
+  validadeAposVencimento: number,
+}
+
+export interface CriarPixPessoa {
+  nome: string,
+  cpf: string,
+  cnpj: string,
+  logradouro: string,
+  uf: string,
+  cep: string,
+  cidade: string,
+  bairro: string,
+  complemento: string,
+  numero: string,
+}
+
+export interface CriarPixValor {
+  original: string,
+  multa: CriarPixValorMulta,
+  juros: CriarPixValorJuros,
+  abatimento: CriarPixValorAbatimento,
+  desconto: CriarPixValorDescontoPerc | CriarPixValorDescontoDataFixa
+}
+
+export interface CriarPixValorMulta {
+  modalidade: 1 | 2,
+  valorPerc: string,
+}
+
+export interface CriarPixValorJuros {
+  modalidade: number,
+  valorPerc: string,
+}
+
+export interface CriarPixValorAbatimento {
+  modalidade: 1 | 2,
+  valorPerc: string,
+}
+
+export interface CriarPixValorDescontoPerc {
+  modalidade: string,
+  valorPerc: string,
+}
+
+export interface CriarPixValorDescontoDataFixa {
+  descontoDataFixa: CriarPixValorDescontoDataFixaArray[],
+  modalidade: string,
+}
+
+export interface CriarPixValorDescontoDataFixaArray {
+  data: string,
+  valorPerc: string,
+}
+
+export interface CriarPixParamsInfoAdicionais {
+  nome: string,
+  valor: string,
+}
+
+
+export interface CriarPixParamsLoc {
+  id: number,
+  tipoCob: 'cob' | 'cobv'
 }
 
 export interface CriarPixResponseLoc {
   id: number,
   location: string,
   tipoCob: 'cob' | 'cobv',
-  criacao: Date,
-}
-
-export interface CriarPixResponseValor {
-  original: string,
-  modalidadeAlteracao: number,
-  retirada: CriarPixResponseValorRetiradaSaque | CriarPixResponseValorRetiradaTroco
-}
-
-export interface CriarPixResponseValorRetiradaSaque {
-  valor: string,
-  modalidadeAlteracao: number,
-  modalidadeAgente: 'AGTEC' | 'AGTOT' | 'AGPSS',
-  prestadorDoServicoDeSaque: string,
-}
-
-export interface CriarPixResponseValorRetiradaTroco {
-  valor: string,
-  modalidadeAlteracao: number,
-  modalidadeAgente: 'AGTEC' | 'AGTOT',
-  prestadorDoServicoDeSaque: string,
-}
-
-export interface CriarPixResponseCalendario {
-  expiracao: number,
   criacao: Date,
 }
