@@ -14,7 +14,7 @@ Biblioteca para acessar a API do Banco Inter
 ## Instalação
 
 ```bash
-$ npm install @thiagozampieri/bancointer
+$ npm install @thiago.zampieri/bancointer
 ```
 
 ## Uso
@@ -23,7 +23,7 @@ $ npm install @thiagozampieri/bancointer
 
 ```js
 import fs from 'fs'
-import { BancoInterAPI } from '@thiagozampieri/bancointer'
+import { BancoInterAPI } from '@thiago.zampieri/bancointer'
 
 const cert = await fs.readFileSync('bancointer.crt') // Caminho do certificado (.crt)
 const key = await fs.readFileSync('bancointer.key') // Caminho da chave privada (.key)
@@ -35,7 +35,7 @@ const api = new BancoInterAPI(conta, cert, key, pass)
 ### Consulta de boleto
 
 ```js
-import { ConsultaBoletos } from '@thiagozampieri/bancointer'
+import { ConsultaBoletos } from '@thiago.zampieri/bancointer'
 
 const consultaAPI = new ConsultaBoletos(api)
 consultaAPI.consultar('00590733210').then((response) => {
@@ -46,7 +46,7 @@ consultaAPI.consultar('00590733210').then((response) => {
 ### Download de PDF de boleto
 
 ```js
-import { PdfBoletos } from '@thiagozampieri/bancointer'
+import { PdfBoletos } from '@thiago.zampieri/bancointer'
 
 const pdfAPI = new PdfBoletos(api)
 pdfAPI.download('00590733210', 'boleto.pdf').then((response) => {
@@ -57,7 +57,7 @@ pdfAPI.download('00590733210', 'boleto.pdf').then((response) => {
 ### Emitir boletos
 
 ```js
-import { EmissaoBoletos } from '@thiagozampieri/bancointer'
+import { EmissaoBoletos } from '@thiago.zampieri/bancointer'
 
 const emissaoAPI = new EmissaoBoletos(api)
 emissaoAPI.emitir({
