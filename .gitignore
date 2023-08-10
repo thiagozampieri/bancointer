@@ -1,6 +1,5 @@
 node_modules
 var
-lib
 # Istambul
 .nyc_output
 coverage

@@ -1,14 +1,13 @@
 {
     "name": "@thiago.zampieri/bancointer",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "description": "API de integração com o banco inter",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "scripts": {
         "compile-watch": "nodemon --exec npm run compile",
         "compile": "babel src --out-dir lib --extensions \".ts,.js\" && tsc --emitDeclarationOnly",
-        "compile-tsc": "tsc --declaration",
-        "postinstall": "npm run compile"
+        "compile-tsc": "tsc --declaration"
     },
     "author": "Thiago Zampieri <thiago.zampieri@gmail.com>",
     "license": "ISC",
