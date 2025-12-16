@@ -1,6 +1,6 @@
 import { BancoInterAPI } from '../banco-inter-api'
 
-export class PdfBoletos {
+export class PdfCobranca {
 
     constructor(
         private api: BancoInterAPI,
@@ -8,10 +8,10 @@ export class PdfBoletos {
         this.api = api
     }
 
-    download(nossoNumero: string, path: string): Promise<any> {
+    download(codigoSolicitacao: string): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                const response = await this.api.get(`cobranca/v2/boletos/${nossoNumero}/pdf`)
+                const response = await this.api.get(`cobranca/v3/cobrancas/${codigoSolicitacao}/pdf`)
                 const base64 = response.data.pdf
                 // if (err) reject(err)
                 resolve(base64)
