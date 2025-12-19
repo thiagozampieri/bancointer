@@ -9,7 +9,7 @@ export class CriarBoletoWebhook {
   }
 
   async criar(webhookUrl: string): Promise<any> {
-    const response = await this.api.put(`cobranca/v2/boletos/webhook`, { webhookUrl })
+    const response = await this.api.put(`cobranca/v2/cobrancas/webhook`, { webhookUrl })
     return response
   }
 }
