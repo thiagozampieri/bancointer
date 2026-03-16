@@ -8,8 +8,8 @@ export class BancoInterAPI {
 
   public httpsAgent: Agent
   public baseUrl: string
-  public accessToken: string = ''
   public credentials: any = {}
+  private accessToken: string = ''
 
   constructor(
     public conta: string,
@@ -18,8 +18,10 @@ export class BancoInterAPI {
     public ca: Buffer,
     public clientId: string,
     public clientSecret: string,
+    public environment: 'PRODUCTION' | 'SANDBOX'
   ) {
-    this.baseUrl = 'https://cdpj.partners.bancointer.com.br'
+
+    this.baseUrl = environment === 'PRODUCTION' ? 'https://cdpj.partners.bancointer.com.br' : 'https://cdpj-sandbox.partners.uatinter.co'
     this.credentials.clientId = clientId
     this.credentials.clientSecret = clientSecret
     this.httpsAgent = new https.Agent({
@@ -63,6 +65,10 @@ export class BancoInterAPI {
     return response
   }
 
+  public async setAcessToken(accessToken: string) {
+    this.accessToken = accessToken;
+  }
+
   public async connect() {
     const path = 'oauth/v2/token'
     const data = querystring.stringify({
@@ -83,9 +89,7 @@ export class BancoInterAPI {
       throw new ResponseError(response.data.error_title, response.data, response.status)
     }
 
-    const { access_token } = response.data
-    this.accessToken = access_token
-    return access_token;
+    return response.data;
   }
 
   private config() {
@@ -97,6 +101,10 @@ export class BancoInterAPI {
   }
 
   private headers() {
+    if (!this.accessToken) {
+      throw new ResponseError('missing_access_token', [], 500)
+    }
+
     return {
       'content-type': 'application/json',
       Authorization: `Bearer ${this.accessToken}`,
